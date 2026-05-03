@@ -1,30 +1,42 @@
 package com.sinergy.node;
 
-import com.getcapacitor.BridgeActivity;
-import android.content.Intent;
+import android.app.Activity;
 import android.os.Bundle;
-import android.view.WindowManager;
 import android.webkit.WebView;
+import android.webkit.WebSettings;
+import android.webkit.WebViewClient;
+import android.content.Intent;
 
-public class MainActivity extends BridgeActivity {
+public class MainActivity extends Activity {
+    private WebView webView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getWindow().setSoftInputMode(
-            WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE |
-            WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN
-        );
+        webView = new WebView(this);
+        setContentView(webView);
 
-        WebView wv = getBridge() != null ? getBridge().getWebView() : null;
-        if (wv != null) {
-            wv.setFocusable(true);
-            wv.setFocusableInTouchMode(true);
-            wv.getSettings().setDatabaseEnabled(true);
-            wv.getSettings().setDomStorageEnabled(true);
-        }
+        WebSettings settings = webView.getSettings();
+        settings.setJavaScriptEnabled(true);
+        settings.setDomStorageEnabled(true);
+        settings.setDatabaseEnabled(true);
+        settings.setAllowFileAccess(true);
+        settings.setAllowContentAccess(true);
+
+        webView.setWebViewClient(new WebViewClient());
+        webView.loadUrl("file:///android_asset/index.html");
 
         Intent svc = new Intent(this, NodeForegroundService.class);
         startForegroundService(svc);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (webView.canGoBack()) {
+            webView.goBack();
+        } else {
+            super.onBackPressed();
+        }
     }
 }
