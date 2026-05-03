@@ -28,9 +28,8 @@ jobs:
       run: |
         cd mobile/android
         chmod +x gradlew
-        ./gradlew assembleDebug 2>&1
-        echo "=== Build output ==="
-        ls -la app/build/outputs/apk/debug/ 2>&1 || echo "APK not found"
+        ./gradlew assembleDebug
+        ls -la app/build/outputs/apk/debug/
     
     - name: Upload APK
       uses: actions/upload-artifact@v4
