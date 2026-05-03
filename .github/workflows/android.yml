@@ -24,14 +24,19 @@ jobs:
     - name: Create local.properties
       run: echo "sdk.dir=$ANDROID_HOME" > mobile/android/local.properties
     
-    - name: Show files
-      run: ls -laR mobile/android/app/src/main/ 2>&1 | head -50
-    
     - name: Build APK
       run: |
         cd mobile/android
         chmod +x gradlew
-        ./gradlew assembleDebug --stacktrace 2>&1
+        ./gradlew assembleDebug --stacktrace > /tmp/build.log 2>&1
+        cat /tmp/build.log
+        echo "BUILD_EXIT_CODE=$?" >> $GITHUB_ENV
+    
+    - name: Upload build log
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-log
+        path: /tmp/build.log
     
     - name: Upload APK
       uses: actions/upload-artifact@v4
