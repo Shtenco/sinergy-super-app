@@ -24,11 +24,18 @@ jobs:
     - name: Create local.properties
       run: echo "sdk.dir=$ANDROID_HOME" > mobile/android/local.properties
     
+    - name: Show files
+      run: |
+        ls -la mobile/android/
+        ls -la mobile/android/app/
+        ls -la mobile/android/app/src/main/
+    
     - name: Build APK
       run: |
         cd mobile/android
         chmod +x gradlew
-        ./gradlew assembleDebug 2>&1
+        ./gradlew clean
+        ./gradlew assembleDebug --info 2>&1 | tail -100
     
     - name: Upload APK
       uses: actions/upload-artifact@v4
