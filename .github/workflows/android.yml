@@ -28,14 +28,11 @@ jobs:
       run: |
         cd mobile/android
         chmod +x gradlew
+        ./gradlew clean
         ./gradlew assembleDebug
-        echo "=== APK Directory ==="
-        ls -la app/build/outputs/apk/debug/
-        echo "=== All APKs ==="
-        find . -name "*.apk" -type f
     
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: sinergyapp
-        path: mobile/android/app/build/outputs/apk/debug/*.apk
+        path: mobile/android/app/build/outputs/apk/debug/app-debug.apk
