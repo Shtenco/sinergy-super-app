@@ -24,17 +24,16 @@ jobs:
     - name: Create local.properties
       run: echo "sdk.dir=$ANDROID_HOME" > mobile/android/local.properties
     
-    - name: Download GGUF Model
+    - name: Show directory
       run: |
-        mkdir -p mobile/app/src/main/assets
-        curl -L -o mobile/app/src/main/assets/Qwen3.5-0.8B-Q4_K_M.gguf \
-        "https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct-GGUF/resolve/main/qwen2.5-0.5b-instruct-q4_k_m.gguf"
+        ls -la mobile/android/
+        ls -la mobile/app/
     
     - name: Build APK
       run: |
         cd mobile/android
         chmod +x gradlew
-        ./gradlew assembleDebug --stacktrace
+        ./gradlew assembleDebug --stacktrace 2>&1
     
     - name: Upload APK
       uses: actions/upload-artifact@v4
