@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#020408">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>SINERGY SUPER APP — AGI + Blockchain</title>
+<meta name="description" content="SINERGY SUPER APP — суперприложение экосистемы SINERGY: кошелёк, AGI Autopilot, DAO 10+1, L1 блокчейн, MetaPay, Mesh сеть, партнёрка и коллективный искусственный интеллект.">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --g:#00e664;--g2:#00c250;--g3:rgba(0,230,100,.12);--g4:rgba(0,230,100,.06);
+  --blk:#000;--b1:#080808;--b2:#111;--b3:#191919;--b4:#242424;
+  --w:#fff;--w2:rgba(255,255,255,.85);--w3:rgba(255,255,255,.5);--w4:rgba(255,255,255,.22);--w5:rgba(255,255,255,.07);
+  --bdr:rgba(0,230,100,.18);--bdr2:rgba(255,255,255,.08);
+  --red:#ff4d6d;--red2:rgba(255,77,109,.1);--yellow:#fbbf24;--blue:#00c9ff;--violet:#a78bfa;
+  --serif:'Instrument Serif',Georgia,serif;--display:'Bebas Neue',sans-serif;--mono:'DM Mono',monospace;--body:'Manrope',sans-serif;
+  --bg:#020408;--bg2:#070d16;--bg3:#0d1a26;
+  --msg-out:#0a1f14;--msg-in:#0d1520;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{height:100%;overflow:hidden}
+body{height:100%;overflow:hidden;background:var(--bg);color:var(--w);font-family:var(--body);display:flex;flex-direction:column;position:relative}
+body:before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 15% 10%,rgba(0,230,100,.07),transparent 48%),radial-gradient(ellipse at 90% 90%,rgba(0,201,255,.04),transparent 50%);pointer-events:none;z-index:0}
+button,input,textarea,select{font-family:inherit}
+button{cursor:pointer;border:0}
+::-webkit-scrollbar{width:3px;height:3px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(0,230,100,.25);border-radius:4px}
+
+/* Header */
+.hdr{height:58px;flex-shrink:0;display:flex;align-items:center;gap:12px;padding:0 14px;background:rgba(0,0,0,.95);border-bottom:1px solid var(--bdr);backdrop-filter:blur(22px);position:relative;z-index:50}
+.logo{font-family:var(--display);font-size:21px;letter-spacing:3px;color:var(--g);line-height:1}
+.logo small{font-family:var(--mono);font-size:8px;color:var(--w3);letter-spacing:1px;margin-left:4px}
+.hdr-search{flex:1;min-width:0;height:34px;background:var(--b2);border:1px solid var(--bdr2);border-radius:18px;display:flex;align-items:center;gap:8px;padding:0 12px;color:var(--w3);font-size:11px}
+.hdr-actions{display:flex;align-items:center;gap:8px}
+.ico-btn{width:34px;height:34px;border-radius:50%;background:var(--b2);border:1px solid var(--bdr2);color:var(--w2);display:flex;align-items:center;justify-content:center;font-size:16px;position:relative}
+.ico-btn .badge{position:absolute;top:-3px;right:-3px;width:15px;height:15px;border-radius:50%;background:var(--red);font-size:8px;color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--g);box-shadow:0 0 8px var(--g);animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+
+/* Layout */
+.app{flex:1;min-height:0;position:relative;z-index:1;display:flex;overflow:hidden}
+.sidebar{width:270px;flex-shrink:0;background:rgba(0,0,0,.82);border-right:1px solid var(--bdr2);padding:14px;overflow-y:auto;display:block}
+.content{flex:1;min-width:0;display:flex;flex-direction:column;overflow:hidden}
+.page{display:none;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px}
+.page.active{display:block;animation:fade .22s ease}
+@keyframes fade{from{opacity:.5;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* Sidebar nav */
+.side-title{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:2px;color:var(--w3);margin:14px 0 8px}
+.nav-btn{width:100%;display:flex;align-items:center;gap:10px;padding:10px;border-radius:12px;background:transparent;color:var(--w3);text-align:left;margin-bottom:4px;transition:.2s}
+.nav-btn.active,.nav-btn:hover{background:var(--g3);color:var(--g)}
+.nav-ico{width:28px;height:28px;border-radius:9px;background:var(--b2);border:1px solid var(--bdr2);display:flex;align-items:center;justify-content:center;font-size:15px}
+.nav-name{font-size:12px;font-weight:800}
+.nav-sub{font-size:9px;color:var(--w3);margin-top:1px}
+.quick-card{background:var(--g3);border:1px solid var(--bdr);border-radius:16px;padding:14px;margin-top:14px}
+.quick-card h4{font-family:var(--display);font-size:20px;color:var(--g);letter-spacing:1px;margin-bottom:6px}
+.quick-card p{font-size:11px;line-height:1.65;color:var(--w3)}
+
+/* Bottom nav */
+.bnav{display:none;position:relative;z-index:60;flex-shrink:0;background:rgba(0,0,0,.97);border-top:1px solid var(--bdr);padding-bottom:env(safe-area-inset-bottom,0)}
+.bnav-btn{flex:1;background:none;color:var(--w3);font-size:8px;font-family:var(--mono);font-weight:700;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 2px 7px;position:relative}
+.bnav-btn.active{color:var(--g);background:var(--g3)}
+.bnav-btn.active:before{content:'';position:absolute;top:0;left:22%;right:22%;height:2px;background:var(--g)}
+.bnav-ico{font-size:19px}
+
+/* Components */
+.hero-card{border:1px solid var(--bdr);border-radius:26px;padding:24px;background:radial-gradient(ellipse at 80% 0%,rgba(0,230,100,.16),transparent 45%),linear-gradient(135deg,#111,#050505);position:relative;overflow:hidden;margin-bottom:12px}
+.hero-card:before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:42px 42px;mask-image:radial-gradient(ellipse 70% 60% at 50% 30%,black,transparent 72%)}
+.hero-in{position:relative;z-index:1}
+.label{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--g);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.label:before{content:'';width:24px;height:1px;background:var(--g)}
+.h1{font-family:var(--display);font-size:clamp(44px,7vw,96px);line-height:.88;letter-spacing:1px}
+.h1 em{color:var(--g);font-style:normal}
+.lead{font-family:var(--serif);font-size:clamp(18px,2.2vw,29px);line-height:1.35;color:var(--w2);font-style:italic;max-width:960px;margin-top:14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.card{background:var(--b2);border:1px solid var(--bdr2);border-radius:18px;padding:16px;margin-bottom:10px;position:relative;overflow:hidden;transition:.2s}
+.card:hover{border-color:var(--bdr)}
+.card.g{background:var(--g3);border-color:var(--bdr)}
+.card.blue{background:rgba(0,201,255,.08);border-color:rgba(0,201,255,.18)}
+.card.gold{background:rgba(251,191,36,.08);border-color:rgba(251,191,36,.2)}
+.card.red{background:var(--red2);border-color:rgba(255,77,109,.25)}
+.card-title{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--g);margin-bottom:10px}
+.card-val{font-family:var(--display);font-size:34px;color:var(--g);letter-spacing:1px;line-height:1}
+.card-sub{font-size:11px;color:var(--w3);line-height:1.65;margin-top:5px}
+.kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:18px}
+.kpi .card{margin-bottom:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 18px;border-radius:10px;font-size:12px;font-weight:900;transition:.2s}
+.btn-primary{background:var(--g);color:#000}
+.btn-outline{background:transparent;border:1px solid var(--bdr);color:var(--w2)}
+.btn-danger{background:var(--red2);color:var(--red);border:1px solid rgba(255,77,109,.25)}
+.btn-block{width:100%}
+.btn-sm{padding:8px 12px;font-size:10px;border-radius:8px;font-family:var(--mono)}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:4px 8px;border-radius:14px;font-size:9px;font-weight:900;font-family:var(--mono)}
+.bdg-ok{background:var(--g3);color:var(--g)}
+.bdg-blue{background:rgba(0,201,255,.12);color:var(--blue)}
+.bdg-warn{background:rgba(251,191,36,.12);color:var(--yellow)}
+.bdg-red{background:var(--red2);color:var(--red)}
+.list{display:grid;gap:8px;margin-top:12px}
+.list div{background:rgba(255,255,255,.04);border-left:2px solid var(--g);border-radius:7px;padding:9px 10px;font-size:12px;color:var(--w2);line-height:1.5}
+.pill-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.pill{padding:5px 10px;border-radius:999px;background:var(--b3);border:1px solid var(--bdr2);font-family:var(--mono);font-size:9px;color:var(--w3);font-weight:700}
+.pill.g{background:var(--g3);border-color:var(--bdr);color:var(--g)}
+.section-title{font-family:var(--display);font-size:38px;line-height:.95;letter-spacing:1px;margin:16px 0 12px}
+.section-title em{color:var(--g);font-style:normal}
+
+/* Super app tiles */
+.tile-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:12px 0}
+.tile{background:var(--b2);border:1px solid var(--bdr2);border-radius:18px;padding:14px 10px;text-align:center;min-height:104px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;transition:.2s}
+.tile:active,.tile:hover{border-color:var(--g);background:var(--g3);transform:translateY(-2px)}
+.tile-ico{font-size:26px}
+.tile-name{font-size:11px;font-weight:900;line-height:1.15}
+.tile-sub{font-size:8px;color:var(--w3);font-family:var(--mono);line-height:1.2}
+
+/* Wallet UI */
+.total{font-family:var(--display);font-size:52px;color:var(--g);letter-spacing:2px;text-align:center}
+.total-sub{text-align:center;color:var(--w3);font-family:var(--mono);font-size:11px;margin:4px 0 16px}
+.actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.action{min-width:84px;background:var(--b3);border:1px solid var(--bdr2);border-radius:16px;padding:12px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.action:hover{border-color:var(--g);background:var(--g3)}
+.asset{display:flex;align-items:center;gap:12px;background:var(--b3);border:1px solid var(--bdr2);border-radius:15px;padding:12px;margin-bottom:8px}
+.asset-ico{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--g3);color:var(--g);font-weight:900}
+.asset-info{flex:1}.asset-name{font-size:14px;font-weight:900}.asset-chain{font-size:10px;color:var(--w3);font-family:var(--mono)}
+.asset-bal{text-align:right}.asset-amount{font-family:var(--mono);font-size:13px;font-weight:900}.asset-fiat{font-size:10px;color:var(--w3)}
+.tabs{display:flex;gap:6px;overflow-x:auto;margin-bottom:12px}
+.tab{padding:8px 12px;border-radius:16px;background:var(--b3);border:1px solid var(--bdr2);color:var(--w3);font-family:var(--mono);font-size:10px;font-weight:900;white-space:nowrap}
+.tab.active{background:var(--g3);border-color:var(--g);color:var(--g)}
+.input{width:100%;background:var(--b3);border:1px solid var(--bdr2);border-radius:12px;padding:13px;color:var(--w);outline:none;font-size:14px}
+.input:focus{border-color:var(--g)}
+.swapbox{background:var(--b3);border:1px solid var(--bdr2);border-radius:18px;padding:14px;margin-bottom:8px}
+.swaprow{display:flex;align-items:center;gap:10px}
+.swapinput{flex:1;background:transparent;border:0;color:#fff;font-family:var(--display);font-size:34px;outline:none;min-width:0}
+.select{padding:8px 12px;border-radius:20px;background:var(--b2);border:1px solid var(--bdr2);font-family:var(--mono);font-size:12px;font-weight:900;color:var(--w)}
+.nfc-ring{width:150px;height:150px;border-radius:50%;border:3px solid var(--g);display:flex;align-items:center;justify-content:center;margin:20px auto;position:relative;box-shadow:0 0 35px rgba(0,230,100,.16)}
+.nfc-ring:before,.nfc-ring:after{content:'';position:absolute;inset:-18px;border:1px solid rgba(0,230,100,.2);border-radius:50%;animation:nfc 2s infinite}.nfc-ring:after{inset:-34px;animation-delay:.45s}
+@keyframes nfc{from{opacity:.7;transform:scale(.9)}to{opacity:0;transform:scale(1.15)}}
+
+/* Messenger */
+.chat-shell{height:calc(100vh - 150px);min-height:540px;display:grid;grid-template-columns:270px 1fr;border:1px solid var(--bdr2);border-radius:20px;overflow:hidden;background:var(--b2)}
+.rooms{border-right:1px solid var(--bdr2);padding:10px;overflow-y:auto}
+.room{padding:12px;border-radius:14px;margin-bottom:6px;background:var(--b3);border:1px solid var(--bdr2)}
+.room.active{background:var(--g3);border-color:var(--g)}
+.room-name{font-size:12px;font-weight:900}.room-last{font-size:10px;color:var(--w3);margin-top:4px}
+.chat{display:flex;flex-direction:column;min-width:0}
+.chat-top{height:54px;border-bottom:1px solid var(--bdr2);display:flex;align-items:center;justify-content:space-between;padding:0 14px}
+.messages{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px}
+.bubble{max-width:76%;padding:10px 13px;border-radius:14px;font-size:13px;line-height:1.5}
+.bubble.in{align-self:flex-start;background:var(--b3);border:1px solid var(--bdr2);border-bottom-left-radius:4px}
+.bubble.out{align-self:flex-end;background:var(--g3);border:1px solid var(--bdr);border-bottom-right-radius:4px}
+.chat-input{display:flex;gap:8px;padding:10px;border-top:1px solid var(--bdr2)}
+.chat-input input{flex:1;background:var(--b3);border:1px solid var(--bdr2);border-radius:20px;padding:11px 14px;color:#fff;outline:none}
+.send{width:42px;height:42px;border-radius:50%;background:var(--g);color:#000;font-weight:900}
+
+/* AI screen */
+.ai-chat{height:320px;background:#000;border:1px solid var(--bdr2);border-radius:14px;padding:14px;overflow-y:auto;font-family:var(--mono);font-size:12px;line-height:1.6;color:var(--w2)}
+.ai-line{margin-bottom:10px}.ai-line b{color:var(--g)}
+.progress{height:10px;background:rgba(255,255,255,.06);border-radius:20px;overflow:hidden;margin:10px 0}.progress i{display:block;height:100%;background:var(--g);border-radius:20px}
+
+/* Marketplace */
+.product{display:flex;gap:12px;align-items:center;background:var(--b3);border:1px solid var(--bdr2);border-radius:16px;padding:12px;margin-bottom:8px}
+.product-ico{width:48px;height:48px;border-radius:14px;background:var(--g3);display:flex;align-items:center;justify-content:center;font-size:24px}
+.product-info{flex:1}.product-name{font-size:14px;font-weight:900}.product-desc{font-size:11px;color:var(--w3);line-height:1.5}
+.price{font-family:var(--mono);font-size:12px;color:var(--g);font-weight:900}
+
+/* Desktop/mobile */
+@media(max-width:980px){
+  .sidebar{display:none}
+  .bnav{display:flex}
+  .hdr-search{display:none}
+  .page{padding:12px}
+  .grid2,.grid3,.grid4,.kpi{grid-template-columns:1fr 1fr}
+  .tile-grid{grid-template-columns:repeat(4,1fr)}
+  .chat-shell{grid-template-columns:1fr;height:calc(100vh - 130px);min-height:480px}
+  .rooms{display:none}
+}
+@media(max-width:560px){
+  .grid2,.grid3,.grid4,.kpi{grid-template-columns:1fr}
+  .tile-grid{grid-template-columns:repeat(3,1fr)}
+  .hero-card{padding:18px;border-radius:20px}
+  .h1{font-size:48px}
+  .lead{font-size:18px}
+  .total{font-size:42px}
+  .logo{font-size:18px;letter-spacing:2px}
+  .hdr{padding:0 10px}
+  .ico-btn{width:32px;height:32px}
+}
+</style>
+</head>
+<body>
+<header class="hdr">
+  <div class="logo">SINERGY<small>SUPERAPP</small></div>
+  <div class="hdr-search">⌕ Найти: оплатить, продать, запустить ИИ, создать DAO...</div>
+  <div class="hdr-actions">
+    <button class="ico-btn" onclick="toast('Уведомления: 7 важных событий')">🔔<span class="badge">7</span></button>
+    <button class="ico-btn" onclick="toast('AGI: ' + AGI_STATE.did + ' | L1: ' + L1_STATE.blocks + ' blocks')"><span class="dot"></span></button>
+  </div>
+</header>
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="side-title">Главное</div>
+    <button class="nav-btn active" data-page="home"><span class="nav-ico">🏠</span><span><div class="nav-name">Главная</div><div class="nav-sub">всё в одном</div></span></button>
+    <button class="nav-btn" data-page="money"><span class="nav-ico">💳</span><span><div class="nav-name">Деньги</div><div class="nav-sub">MetaPay, NFC, СБП</div></span></button>
+    <button class="nav-btn" data-page="ai"><span class="nav-ico">🧠</span><span><div class="nav-name">AI Autopilot</div><div class="nav-sub">личный AGI</div></span></button>
+    <button class="nav-btn" data-page="messenger"><span class="nav-ico">💬</span><span><div class="nav-name">Messenger</div><div class="nav-sub">PQ + mesh</div></span></button>
+    <div class="side-title">Бизнес</div>
+    <button class="nav-btn" data-page="business"><span class="nav-ico">📈</span><span><div class="nav-name">Бизнес</div><div class="nav-sub">Sales, CFO, Ads</div></span></button>
+    <button class="nav-btn" data-page="market"><span class="nav-ico">🛒</span><span><div class="nav-name">Маркетплейс</div><div class="nav-sub">услуги и продукты</div></span></button>
+    <button class="nav-btn" data-page="affiliate"><span class="nav-ico">🤝</span><span><div class="nav-name">Партнёрка</div><div class="nav-sub">CPA + AI traffic</div></span></button>
+    <div class="side-title">Экосистема</div>
+    <button class="nav-btn" data-page="dao"><span class="nav-ico">🧬</span><span><div class="nav-name">DAO</div><div class="nav-sub">ячейки 10+1</div></span></button>
+    <button class="nav-btn" data-page="invest"><span class="nav-ico">🏦</span><span><div class="nav-name">Инвестиции</div><div class="nav-sub">MIDAS, фонды</div></span></button>
+    <button class="nav-btn" data-page="tech"><span class="nav-ico">⚡</span><span><div class="nav-name">Технологии</div><div class="nav-sub">L1, Mesh, OS</div></span></button>
+    <button class="nav-btn" data-page="profile"><span class="nav-ico">👤</span><span><div class="nav-name">Профиль</div><div class="nav-sub">ID, KYC, статус</div></span></button>
+    <div class="quick-card">
+      <h4>SUPERAPP</h4>
+      <p>Не приложение для технарей. Это личный центр жизни, денег, бизнеса и ИИ — в одном удобном интерфейсе.</p>
+    </div>
+  </aside>
+
+  <main class="content">
+
+    <!-- HOME -->
+    <section class="page active" id="page-home">
+      <div class="hero-card">
+        <div class="hero-in">
+          <div class="label">Super App · Life · Business · Money · AI</div>
+          <h1 class="h1"><em>SINERGY</em><br>SUPERAPP</h1>
+          <p class="lead">Один экран для жизни, денег, бизнеса и ИИ. Оплатить, продать, создать контент, запустить рекламу, найти клиента, проверить финансы, войти в DAO, инвестировать, переписываться и управлять автопилотом — без технической боли.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px">
+            <button class="btn btn-primary" onclick="openPage('ai')">Запустить AI Autopilot →</button>
+            <button class="btn btn-outline" onclick="openPage('money')">Открыть MetaPay</button>
+          </div>
+          <div class="kpi">
+            <div class="card"><div class="card-val">1</div><div class="card-sub">приложение вместо десятков сервисов</div></div>
+            <div class="card"><div class="card-val">95%</div><div class="card-sub">рутинных задач можно отдать автопилоту</div></div>
+            <div class="card"><div class="card-val">24/7</div><div class="card-sub">AI помощник, продажи, финансы, реклама</div></div>
+            <div class="card"><div class="card-val">DAO</div><div class="card-sub">экономика взаимной помощи и роста</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-title">Что внутри <em>супераппа</em></div>
+      <div class="tile-grid">
+        <div class="tile" onclick="openPage('money')"><div class="tile-ico">💳</div><div class="tile-name">MetaPay</div><div class="tile-sub">фиат · крипта · NFC</div></div>
+        <div class="tile" onclick="openPage('ai')"><div class="tile-ico">🧠</div><div class="tile-name">AI Autopilot</div><div class="tile-sub">цель → результат</div></div>
+        <div class="tile" onclick="openPage('business')"><div class="tile-ico">📈</div><div class="tile-name">Бизнес</div><div class="tile-sub">sales · CFO · ads</div></div>
+        <div class="tile" onclick="openPage('messenger')"><div class="tile-ico">💬</div><div class="tile-name">Messenger</div><div class="tile-sub">PQ · mesh · DAO</div></div>
+        <div class="tile" onclick="openPage('dao')"><div class="tile-ico">🧬</div><div class="tile-name">DAO</div><div class="tile-sub">ячейки 10+1</div></div>
+        <div class="tile" onclick="openPage('market')"><div class="tile-ico">🛒</div><div class="tile-name">Market</div><div class="tile-sub">товары · услуги</div></div>
+        <div class="tile" onclick="openPage('affiliate')"><div class="tile-ico">🤝</div><div class="tile-name">CPA</div><div class="tile-sub">партнёрские ссылки</div></div>
+        <div class="tile" onclick="openPage('invest')"><div class="tile-ico">🏦</div><div class="tile-name">Invest</div><div class="tile-sub">MIDAS · пулы</div></div>
+        <div class="tile" onclick="openPage('tech')"><div class="tile-ico">⚡</div><div class="tile-name">Tech</div><div class="tile-sub">L1 · mesh · OS</div></div>
+        <div class="tile" onclick="openPage('profile')"><div class="tile-ico">👤</div><div class="tile-name">Profile</div><div class="tile-sub">ID · KYC · trust</div></div>
+      </div>
+
+      <div class="grid3">
+        <div class="card g"><div class="card-title">Сегодня AI нашёл</div><div class="card-val">₽84K</div><div class="card-sub">потенциальной экономии в расходах и рекламе</div></div>
+        <div class="card"><div class="card-title">Заявки</div><div class="card-val">37</div><div class="card-sub">лидов из SMM, рекламы и партнёрской сети</div></div>
+        <div class="card"><div class="card-title">DAO status</div><div class="card-val">7/10</div><div class="card-sub">участников готовы к созданию ячейки</div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Главный принцип</div>
+        <div class="list">
+          <div><b>Не заставлять человека понимать блокчейн.</b> Он просто платит, общается, продаёт, запускает ИИ и получает результат.</div>
+          <div><b>Не разбрасывать продукты по сайтам.</b> Всё, что мы сделали — переносится в SuperApp как модули.</div>
+          <div><b>Не делать приложение для технарей.</b> Технологии спрятаны под красивыми действиями: “запустить”, “получить”, “оплатить”, “продать”.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MONEY -->
+    <section class="page" id="page-money">
+      <div class="hero-card">
+        <div class="hero-in">
+          <div class="label">MetaPay · Wallet · NFC · СБП · Crypto</div>
+          <h1 class="h1"><em>ДЕНЬГИ</em><br>БЕЗ БОЛИ</h1>
+          <p class="lead">Один кошелёк для рубля, тенге, крипты, стейблкоинов, DAO‑фондов, подписок, выплат, NFC‑оплаты, СБП и escrow‑сделок.</p>
+        </div>
+      </div>
+      <div class="card g">
+        <div class="card-title">Ваш портфель</div>
+        <div class="total">$42,860</div>
+        <div class="total-sub">≈ 3 921 690 RUB · обновлено сейчас</div>
+        <div class="actions">
+          <button class="action" onclick="toast('Форма отправки открыта')"><span>▲</span><b>Send</b></button>
+          <button class="action" onclick="toast('QR для получения создан')"><span>▼</span><b>Receive</b></button>
+          <button class="action" onclick="toast('Обмен SYNA → BTC рассчитан')"><span>↔</span><b>Swap</b></button>
+          <button class="action" onclick="toast('NFC Pay активирован')"><span>💳</span><b>NFC</b></button>
+        </div>
+      </div>
+      <div class="tabs">
+        <button class="tab active">ALL</button><button class="tab">RUB</button><button class="tab">KZT</button><button class="tab">CRYPTO</button><button class="tab">DAO</button><button class="tab">ESCROW</button>
+      </div>
+      <div class="grid2">
+        <div>
+          <div class="asset"><div class="asset-ico">S</div><div class="asset-info"><div class="asset-name">SYNA</div><div class="asset-chain">SINERGY L1 · native</div></div><div class="asset-bal"><div class="asset-amount">18 420</div><div class="asset-fiat">$12 894</div></div></div>
+          <div class="asset"><div class="asset-ico">₽</div><div class="asset-info"><div class="asset-name">RUB Balance</div><div class="asset-chain">СБП · банк · MetaPay</div></div><div class="asset-bal"><div class="asset-amount">618 500</div><div class="asset-fiat">RUB</div></div></div>
+          <div class="asset"><div class="asset-ico">₿</div><div class="asset-info"><div class="asset-name">Bitcoin</div><div class="asset-chain">BTC bridge · HTLC</div></div><div class="asset-bal"><div class="asset-amount">0.184</div><div class="asset-fiat">$11 420</div></div></div>
+          <div class="asset"><div class="asset-ico">D</div><div class="asset-info"><div class="asset-name">DAO Reserve</div><div class="asset-chain">ячейка 10+1 · takaful</div></div><div class="asset-bal"><div class="asset-amount">2 400</div><div class="asset-fiat">USDT</div></div></div>
+        </div>
+        <div>
+          <div class="card"><div class="card-title">Быстрый обмен</div>
+            <div class="swapbox"><div class="card-sub">Отдаёте</div><div class="swaprow"><input class="swapinput" value="1000"><button class="select">SYNA ▾</button></div></div>
+            <div style="text-align:center;color:var(--g);font-size:24px">↕</div>
+            <div class="swapbox"><div class="card-sub">Получаете</div><div class="swaprow"><input class="swapinput" value="3780"><button class="select">RUB ▾</button></div></div>
+            <div class="card-sub">Курс: 1 SYNA = 3.78 ₽ · комиссия 0.1%</div>
+            <button class="btn btn-primary btn-block" style="margin-top:12px" onclick="toast('Демо-обмен выполнен')">Обменять</button>
+          </div>
+          <div class="card"><div class="card-title">NFC Pay</div><div class="nfc-ring" onclick="toast('NFC: приложите телефон к терминалу')">💳</div><div class="card-sub" style="text-align:center">Крипта автоматически конвертируется в валюту магазина</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI -->
+    <section class="page" id="page-ai">
+      <div class="hero-card">
+        <div class="hero-in">
+          <div class="label">AGI · Autopilot · Personal Operator</div>
+          <h1 class="h1"><em>AI</em><br>AUTOPILOT</h1>
+          <p class="lead">Человек говорит цель — система сама раскладывает план, пишет тексты, запускает рекламу, продаёт, считает деньги, готовит документы и показывает контрольные точки.</p>
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <div class="card-title">AGI чат</div>
+          <div class="ai-chat" id="aiLog">
+            <div class="ai-line"><b>OLGA AGI:</b> Я вижу 4 быстрые точки роста: реклама, продажи, упаковка оффера и финансовый аудит.</div>
+            <div class="ai-line"><b>Вы:</b> Запусти автопилот для моего бизнеса.</div>
+            <div class="ai-line"><b>OLGA AGI:</b> Готовлю план на 7 дней: контент, лиды, дожим, оптимизация расходов.</div>
+          </div>
+          <textarea class="input" id="aiInput" rows="3" placeholder="Например: увеличь продажи, сократи расходы, запусти SMM, собери лендинг..."></textarea>
+          <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+            <button class="btn btn-primary" onclick="sendAI()">Отправить</button>
+            <button class="btn btn-outline" onclick="runAutopilot()">Запустить автопилот</button>
+            <button class="btn btn-outline" onclick="syncAGINetwork();toast('Синхронизация с AGI сетью...')">Синхронизация</button>
+          </div>
+        </div>
+        <div>
+          <div class="card g"><div class="card-title">AI CFO нашёл</div><div class="card-val">−18%</div><div class="card-sub">расходов можно убрать без потери роста</div></div>
+          <div class="card"><div class="card-title">AI Sales</div><div class="progress"><i style="width:78%"></i></div><div class="card-sub">23 лида обработаны · 5 горячих · 3 требуют звонка</div></div>
+          <div class="card"><div class="card-title">AI SMM</div><div class="progress"><i style="width:86%"></i></div><div class="card-sub">контент‑план на 14 дней готов, 8 постов можно публиковать</div></div>
+          <div class="card"><div class="card-title">AI Advert</div><div class="progress"><i style="width:64%"></i></div><div class="card-sub">3 рекламные связки готовы к тесту</div></div>
+        </div>
+      </div>
+      <div class="section-title">Автопилоты <em>одной кнопкой</em></div>
+      <div class="tile-grid">
+        <div class="tile"><div class="tile-ico">📣</div><div class="tile-name">SMM</div><div class="tile-sub">контент и прогрев</div></div>
+        <div class="tile"><div class="tile-ico">☎️</div><div class="tile-name">Sales</div><div class="tile-sub">лиды и дожим</div></div>
+        <div class="tile"><div class="tile-ico">💰</div><div class="tile-name">CFO</div><div class="tile-sub">расходы и прибыль</div></div>
+        <div class="tile"><div class="tile-ico">🎯</div><div class="tile-name">Advert</div><div class="tile-sub">реклама и ROI</div></div>
+        <div class="tile"><div class="tile-ico">💻</div><div class="tile-name">Code</div><div class="tile-sub">боты и сайты</div></div>
+      </div>
+    </section>
+
+    <!-- MESSENGER -->
+    <section class="page" id="page-messenger">
+      <div class="hero-card">
+        <div class="hero-in">
+          <div class="label">PostQuantumMessenger · Mesh · DAO rooms</div>
+          <h1 class="h1"><em>ЗАЩИЩЁННАЯ</em><br>СВЯЗЬ</h1>
+          <p class="lead">Чаты, DAO‑комнаты, сделки, платежи и документы в одном защищённом мессенджере с post‑quantum E2E, mesh/offline доставкой и AI‑защитой.</p>
+        </div>
+      </div>
+      <div class="chat-shell">
+        <div class="rooms">
+          <div class="room active"><div class="room-name">DAO 10+1</div><div class="room-last">Голосование по фонду</div></div>
+          <div class="room"><div class="room-name">AI Autopilot</div><div class="room-last">12 задач в работе</div></div>
+          <div class="room"><div class="room-name">Business Deal</div><div class="room-last">Escrow ожидает milestone</div></div>
+          <div class="room"><div class="room-name">Mesh Local</div><div class="room-last">3 узла рядом</div></div>
+        </div>
+        <div class="chat">
+          <div class="chat-top"><b>DAO 10+1 · защищённая комната</b><span class="badge bdg-ok">PQ E2E</span></div>
+          <div class="messages">
+            <div class="bubble in">AI‑юрист проверил договор: риск низкий, escrow достаточно 30%.</div>
+            <div class="bubble out">Запускаем голосование по инвестиционному фонду.</div>
+            <div class="bubble in">7/10 участников подтвердили. Нужно ещё 1 подтверждение лидера.</div>
+            <div class="bubble out">Подтвердить выплату после milestone.</div>
+          </div>
+          <div class="chat-input"><input placeholder="Написать защищённое сообщение..."><button class="send" onclick="toast('Сообщение зашифровано и отправлено')">➤</button></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BUSINESS -->
+    <section class="page" id="page-business">
+      <div class="hero-card"><div class="hero-in"><div class="label">Business cockpit · SMM · Sales · CFO · Advert</div><h1 class="h1"><em>БИЗНЕС</em><br>В АВТОПИЛОТЕ</h1><p class="lead">Эксперт, ИП или компания видит в одном экране клиентов, рекламу, финансы, заявки, контент, расходы и прибыль. AI не советует — он ведёт процесс.</p></div></div>
+      <div class="grid4">
+        <div class="card g"><div class="card-title">Выручка</div><div class="card-val">₽2.8M</div><div class="card-sub">+24% к прошлому месяцу</div></div>
+        <div class="card"><div class="card-title">Чистая прибыль</div><div class="card-val">₽840K</div><div class="card-sub">AI CFO улучшил маржу</div></div>
+        <div class="card"><div class="card-title">CAC</div><div class="card-val">₽1.2K</div><div class="card-sub">реклама оптимизирована</div></div>
+        <div class="card"><div class="card-title">LTV</div><div class="card-val">₽18K</div><div class="card-sub">подписки и повторные продажи</div></div>
+      </div>
+      <div class="grid2">
+        <div class="card"><div class="card-title">AI Sales pipeline</div><div class="list"><div>184 лида в CRM</div><div>42 квалифицированы AI‑скорингом</div><div>17 готовы к оплате</div><div>5 требуют персонального оффера</div></div></div>
+        <div class="card"><div class="card-title">AI CFO аудит</div><div class="list"><div>перерасход рекламы: ₽84K</div><div>слабые подрядчики: 2 контракта</div><div>кассовый разрыв через 21 день: риск средний</div><div>точка роста: подписка PRO</div></div></div>
+      </div>
+    </section>
+
+    <!-- MARKET -->
+    <section class="page" id="page-market">
+      <div class="hero-card"><div class="hero-in"><div class="label">Marketplace · services · products · experts</div><h1 class="h1"><em>МАРКЕТ</em><br>SINERGY</h1><p class="lead">Витрина продуктов всей экосистемы: AI‑сервисы, эксперты, фрилансеры, DAO‑услуги, бизнес‑решения, подписки и токенизированные продукты.</p></div></div>
+      <div class="tabs"><button class="tab active">Все</button><button class="tab">AI</button><button class="tab">Бизнес</button><button class="tab">Финансы</button><button class="tab">DAO</button><button class="tab">Разработка</button></div>
+      <div class="grid2">
+        <div>
+          <div class="product"><div class="product-ico">🧠</div><div class="product-info"><div class="product-name">SINERGY Autopilot PRO</div><div class="product-desc">AI‑оператор для бизнеса и личных задач</div></div><div class="price">₽14 900/мес</div></div>
+          <div class="product"><div class="product-ico">📣</div><div class="product-info"><div class="product-name">SINERGYSMM</div><div class="product-desc">контент, кросс‑постинг, бренд‑менеджер</div></div><div class="price">₽9 900/мес</div></div>
+          <div class="product"><div class="product-ico">☎️</div><div class="product-info"><div class="product-name">SINERGYSALES</div><div class="product-desc">AI‑продажник, скоринг, автодожим</div></div><div class="price">₽19 900/мес</div></div>
+          <div class="product"><div class="product-ico">💳</div><div class="product-info"><div class="product-name">MetaPay Merchant</div><div class="product-desc">приём фиата, крипты, подписок и escrow</div></div><div class="price">1.5%</div></div>
+        </div>
+        <div>
+          <div class="card g"><div class="card-title">AI подбирает продукт</div><div class="card-sub">Для эксперта с аудиторией 5–20K лучше всего начать с SINERGYSMM + Sales + Affiliate.</div><button class="btn btn-primary btn-block" style="margin-top:12px" onclick="toast('AI подобрал 3 продукта под ваш профиль')">Подобрать мне</button></div>
+          <div class="card"><div class="card-title">Разместить свой продукт</div><div class="card-sub">ООО, ИП, эксперт, фрилансер или DAO может добавить оффер, комиссию и партнёрскую ссылку.</div><button class="btn btn-outline btn-block" style="margin-top:12px" onclick="toast('Форма размещения продукта открыта')">Добавить оффер</button></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AFFILIATE -->
+    <section class="page" id="page-affiliate">
+      <div class="hero-card"><div class="hero-in"><div class="label">CPA · referrals · AI traffic · compliance</div><h1 class="h1"><em>ПАРТНЁРСКАЯ</em><br>СЕТЬ</h1><p class="lead">Любой человек может рекомендовать продукты, получать ссылку, запускать AI‑трафик и получать выплату только за реальные продажи или целевые действия.</p></div></div>
+      <div class="grid4">
+        <div class="card g"><div class="card-title">Доход партнёра</div><div class="card-val">₽318K</div><div class="card-sub">approved commissions</div></div>
+        <div class="card"><div class="card-title">Клики</div><div class="card-val">24K</div><div class="card-sub">за 30 дней</div></div>
+        <div class="card"><div class="card-title">Продажи</div><div class="card-val">186</div><div class="card-sub">после hold</div></div>
+        <div class="card"><div class="card-title">ROI</div><div class="card-val">3.4×</div><div class="card-sub">AI traffic</div></div>
+      </div>
+      <div class="grid2">
+        <div class="card"><div class="card-title">AI запустит трафик</div><div class="list"><div>создаст креативы</div><div>выберет аудитории</div><div>разметит UTM и postback</div><div>остановит слабые связки</div></div></div>
+        <div class="card gold"><div class="card-title">Комплаенс</div><div class="list"><div>не платим за регистрацию людей</div><div>только продажи, лиды или целевые действия</div><div>агентская/CPA модель</div><div>маркировка интернет‑рекламы и anti‑fraud</div></div></div>
+      </div>
+    </section>
+
+    <!-- DAO -->
+    <section class="page" id="page-dao">
+      <div class="hero-card"><div class="hero-in"><div class="label">DAO · mutual insurance · investments · help</div><h1 class="h1"><em>DAO</em><br>10+1</h1><p class="lead">DAO — это консорциум на земле и смарт‑контракт в блокчейне. 10 участников + лидер, фонды взаимопомощи, страхования, инвестиций и коллективного роста.</p></div></div>
+      <div class="grid3">
+        <div class="card g"><div class="card-title">Ячейка</div><div class="card-val">7/10</div><div class="card-sub">участников готовы</div></div>
+        <div class="card"><div class="card-title">Фонд помощи</div><div class="card-val">₽1.2M</div><div class="card-sub">takaful reserve</div></div>
+        <div class="card"><div class="card-title">Trust score</div><div class="card-val">88%</div><div class="card-sub">AI риск низкий</div></div>
+      </div>
+      <div class="grid3">
+        <div class="card"><div class="card-title">Ликвидность</div><div class="card-sub">быстрая взаимопомощь, кассовые разрывы, микрофинансирование без пирамидальной модели.</div></div>
+        <div class="card"><div class="card-title">Инвестиции</div><div class="card-sub">мушарака, мудараба, долевое участие, токенизированные бизнес‑потоки.</div></div>
+        <div class="card"><div class="card-title">Страхование</div><div class="card-sub">mutual/takaful: помощь при проблемах через правила, доказательства и голосование.</div></div>
+      </div>
+    </section>
+
+    <!-- INVEST -->
+    <section class="page" id="page-invest">
+      <div class="hero-card"><div class="hero-in"><div class="label">MIDAS · pools · risk · tokenized revenue</div><h1 class="h1"><em>ИНВЕСТ</em><br>ЦЕНТР</h1><p class="lead">Пулы, MIDAS, DAO‑инвестиции, токенизированные бизнесы, risk‑manager, VaR/CVaR и портфельная оптимизация — в понятном интерфейсе.</p></div></div>
+      <div class="grid4">
+        <div class="card g"><div class="card-title">Портфель</div><div class="card-val">$128K</div><div class="card-sub">assets under personal control</div></div>
+        <div class="card"><div class="card-title">Risk</div><div class="card-val">LOW</div><div class="card-sub">VaR/CVaR в норме</div></div>
+        <div class="card"><div class="card-title">MIDAS</div><div class="card-val">ON</div><div class="card-sub">AI hedge layer</div></div>
+        <div class="card"><div class="card-title">DAO pools</div><div class="card-val">12</div><div class="card-sub">доступно</div></div>
+      </div>
+      <div class="card gold"><div class="card-title">Важно</div><div class="card-sub">Интерфейс показывает риск и сценарии. Нет обещаний гарантированного дохода. Любые инвестиции требуют проверки, лимитов и согласия пользователя.</div></div>
+    </section>
+
+    <!-- TECH -->
+    <section class="page" id="page-tech">
+      <div class="hero-card"><div class="hero-in"><div class="label">L1 · Turbo Mesh · PostQuantum · OS · DeepCompress</div><h1 class="h1"><em>ТЕХНОЛОГИИ</em><br>СПРЯТАНЫ</h1><p class="lead">Пользователь видит удобные кнопки. Внутри работают Post‑Quantum AI Blockchain, MetaPay, Turbo Mesh, DeepCompress, SHTENCO OS, PostQuantumMessenger и AI Autopilot.</p></div></div>
+      <div class="grid4">
+        <div class="card"><div class="card-title">AI L1</div><div class="card-sub">узел = валидатор + AI inference + ledger</div></div>
+        <div class="card"><div class="card-title">Turbo Mesh</div><div class="card-sub">децентрализованная доставка, cache, relay</div></div>
+        <div class="card"><div class="card-title">DeepCompress</div><div class="card-sub">сжатие моделей, данных, обновлений</div></div>
+        <div class="card"><div class="card-title">SHTENCO OS</div><div class="card-sub">среда для приложений и AI‑операций</div></div>
+      </div>
+      <div class="card"><div class="card-title">Принцип UX</div><div class="list"><div>сложные технологии не показываем обычному человеку как “сложность”</div><div>показываем как действия: оплатить, продать, защитить, создать, получить, запустить</div><div>технические панели остаются для power users, разработчиков и DAO‑администраторов</div></div></div>
+    </section>
+
+    <!-- PROFILE -->
+    <section class="page" id="page-profile">
+      <div class="hero-card"><div class="hero-in"><div class="label">Identity · trust · roles · security</div><h1 class="h1"><em>ПРОФИЛЬ</em><br>ДОВЕРИЯ</h1><p class="lead">Один SINERGY ID для кошелька, DAO, бизнеса, партнёрки, мессенджера, платежей, KYC/KYB, ролей и доверия.</p></div></div>
+      <div class="grid2">
+        <div class="card g"><div class="card-title">SINERGY ID</div><div class="card-val">A‑8842</div><div class="card-sub">verified · post‑quantum keys active</div></div>
+        <div class="card"><div class="card-title">Trust Score</div><div class="card-val">91%</div><div class="card-sub">DAO, payments, deals, reputation</div></div>
+      </div>
+      <div class="card"><div class="card-title">Роли</div><div class="pill-row"><span class="pill g">User</span><span class="pill g">Partner</span><span class="pill g">DAO candidate</span><span class="pill">Merchant</span><span class="pill">AI operator</span><span class="pill">Investor profile</span></div></div>
+      <div class="card"><div class="card-title">Безопасность</div><div class="list"><div>post‑quantum ключи включены</div><div>multi‑sig для DAO и escrow</div><div>AI guard проверяет фишинг и подозрительные действия</div><div>recovery через доверенные контакты/DAO‑политику</div></div></div>
+    </section>
+
+  </main>
+</div>
+
+<nav class="bnav">
+  <button class="bnav-btn active" data-page="home"><span class="bnav-ico">🏠</span>HOME</button>
+  <button class="bnav-btn" data-page="money"><span class="bnav-ico">💳</span>PAY</button>
+  <button class="bnav-btn" data-page="ai"><span class="bnav-ico">🧠</span>AI</button>
+  <button class="bnav-btn" data-page="business"><span class="bnav-ico">📈</span>BIZ</button>
+  <button class="bnav-btn" data-page="messenger"><span class="bnav-ico">💬</span>CHAT</button>
+  <button class="bnav-btn" data-page="market"><span class="bnav-ico">☰</span>MORE</button>
+</nav>
+
+<div id="toast" style="position:fixed;left:50%;bottom:78px;transform:translateX(-50%) translateY(20px);background:var(--g3);border:1px solid var(--bdr);color:var(--g);font-family:var(--mono);font-size:11px;font-weight:700;padding:12px 18px;border-radius:12px;z-index:999;opacity:0;pointer-events:none;transition:.25s;white-space:nowrap;max-width:92%;overflow:hidden;text-overflow:ellipsis"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════════════
+//  SINERGYSUPERAPP — AGI + L1 Blockchain + Collective AI Integration
+// ═══════════════════════════════════════════════════════════════════════════
+
+// AGI Configuration - LLM Server runs in Foreground Service on port 8788
+const AGI_CFG = {
+  localApi: 'http://127.0.0.1:8788/api/chat',
+  localApiAlt: 'http://localhost:8788/api/chat',
+  collectiveApi: 'http://127.0.0.1:8001',
+  syncChannel: 'sinergy-agi-consensus-v1',
+  embedded: true, // LLM is embedded in APK
+};
+
+// AGI State
+const AGI_STATE = {
+  did: '',
+  secret: '',
+  commits: [],
+  peers: 0
+};
+
+// Hash16D simple hash function
+async function hash16D(data) {
+  const encoder = new TextEncoder();
+  const dataBuffer = encoder.encode(data);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', dataBuffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('').slice(0, 16);
+}
+
+// Initialize AGI Node
+async function initAGI() {
+  AGI_STATE.did = localStorage.getItem('sinergy_agi_did') || ('agi_' + (await hash16D(String(Date.now()) + Math.random())).slice(0, 20));
+  AGI_STATE.secret = localStorage.getItem('sinergy_agi_secret') || ('sec_' + (await hash16D(String(Math.random()) + navigator.userAgent)).slice(0, 32));
+  localStorage.setItem('sinergy_agi_did', AGI_STATE.did);
+  localStorage.setItem('sinergy_agi_secret', AGI_STATE.secret);
+  
+  try {
+    AGI_STATE.commits = JSON.parse(localStorage.getItem('sinergy_agi_commits') || '[]');
+  } catch(e) {
+    AGI_STATE.commits = [];
+  }
+  
+  setupAGIBroadcastChannel();
+  toast('AGI Node: ' + AGI_STATE.did);
+  logAGI('Система AGI инициализирована. DID: ' + AGI_STATE.did);
+}
+
+// BroadcastChannel for P2P AGI sync
+function setupAGIBroadcastChannel() {
+  if (typeof BroadcastChannel === 'undefined') return;
+  const channel = new BroadcastChannel(AGI_CFG.syncChannel);
+  channel.onmessage = (evt) => {
+    const msg = evt.data || {};
+    if (msg.did === AGI_STATE.did) return;
+    if (msg.type === 'AGI_COMMIT' && msg.payload) {
+      acceptAGICommit(msg.payload, '[P2P]');
+    } else if (msg.type === 'AGI_PULL_REQ') {
+      const recent = AGI_STATE.commits.slice(-20);
+      channel.postMessage({ type: 'AGI_PULL_RESP', did: AGI_STATE.did, to: msg.did, items: recent });
+    } else if (msg.type === 'AGI_PULL_RESP' && (!msg.to || msg.to === AGI_STATE.did) && Array.isArray(msg.items)) {
+      for (const c of msg.items) acceptAGICommit(c, '[SYNC]');
+      AGI_STATE.peers = msg.items?.length || 0;
+    }
+  };
+}
+
+// Accept AGI commit
+function acceptAGICommit(commit, src) {
+  if (!commit || !commit.hash) return;
+  const exists = AGI_STATE.commits.find(c => c.hash === commit.hash);
+  if (exists) return;
+  AGI_STATE.commits.push(commit);
+  localStorage.setItem('sinergy_agi_commits', JSON.stringify(AGI_STATE.commits.slice(-500)));
+  logAGI(src + ' принят коммит: ' + commit.hash.slice(0, 12) + '.. от ' + (commit.did || 'unknown'));
+}
+
+// Log to AGI chat
+function logAGI(msg) {
+  const log = document.getElementById('aiLog');
+  if (log) {
+    log.innerHTML += '<div class="ai-line" style="color:var(--g)"><b>SYS:</b> ' + escapeHtml(msg) + '</div>';
+    log.scrollTop = log.scrollHeight;
+  }
+}
+
+// Send to OLGA AGI (embedded in APK)
+async function sendAI() {
+  const inp = document.getElementById('aiInput');
+  const log = document.getElementById('aiLog');
+  const val = (inp.value || '').trim() || 'Запусти автопилот роста';
+  
+  log.innerHTML += '<div class="ai-line"><b>Вы:</b> ' + escapeHtml(val) + '</div>';
+  inp.value = '';
+  log.scrollTop = log.scrollHeight;
+  
+  let answer = '';
+  let errorMsg = '';
+  
+  // Try embedded LLM first (port 8788 from ForegroundService)
+  try {
+    const resp = await fetch(AGI_CFG.localApi, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        message: val, 
+        prompt: val, 
+        messages: [{ role: 'user', content: val }] 
+      })
+    });
+    const raw = await resp.text();
+    try {
+      const obj = JSON.parse(raw);
+      // Handle OpenAI format
+      if (obj.choices && obj.choices[0]) {
+        answer = obj.choices[0].message?.content || obj.choices[0].text || '';
+      }
+      answer = answer || obj.response || obj.answer || obj.text || obj.content || raw;
+    } catch(e) {
+      answer = raw;
+    }
+  } catch(e) {
+    errorMsg = e.message;
+    // Try alternative port
+    try {
+      const resp = await fetch(AGI_CFG.localApiAlt, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: val })
+      });
+      answer = await resp.text();
+    } catch(e2) {
+      // Use fallback
+      answer = '';
+    }
+  }
+  
+  // If no answer from server, use fallback
+  if (!answer || answer.includes('error')) {
+    const lowerVal = val.toLowerCase();
+    if (lowerVal.contains('продаж') || lowerVal.contains('продать')) {
+      answer = 'OLGA AGI (локальный): Анализирую продажи.\n\n📊 Рекомендации:\n1. AI-скоринг лидов\n2. Воронка продаж\n3. Автодожим\n4. Интеграция с CRM\n\nЗапустить Sales Autopilot?';
+    } else if (lowerVal.contains('расход') || lowerVal.contains('деньг') || lowerVal.contains('финанс')) {
+      answer = 'OLGA AGI (локальный): Финансовый анализ!\n\n💰 Оптимизация:\n• Расходы: -18%\n• Реклама: -24%\n• Подрядчики: пересмотреть\n\nЗапустить CFO Autopilot?';
+    } else if (lowerVal.contains('контент') || lowerVal.contains('smm') || lowerVal.contains('реклам')) {
+      answer = 'OLGA AGI (локальный): SMM план готов!\n\n📅 14 постов / 14 дней\n🎬 3 формата контента\n📱 Автопостинг во все каналы\n\nЗапустить SMM Autopilot?';
+    } else if (lowerVal.contains('автопилот')) {
+      answer = 'OLGA AGI (локальный): ✅ Автопилот активирован!\n\n🚀 Задачи в работе:\n• SMM - контент и прогрев\n• Sales - лиды и дожим\n• CFO - оптимизация расходов\n• Advert - реклама и ROI\n\nСтатус: 12 задач';
+    } else {
+      answer = 'OLGA AGI (встроенный GGUF): Я - коллективный ИИ SINERGY.\n\nМогу помочь с:\n• Продажами и маркетингом\n• Финансами и оптимизацией\n• Контентом и SMM\n• DAO и инвестициями\n\nНапишите задачу или скажите "запусти автопилот"';
+    }
+  }
+  
+  log.innerHTML += '<div class="ai-line"><b>OLGA AGI:</b> ' + escapeHtml(answer) + '</div>';
+  log.scrollTop = log.scrollHeight;
+  
+  // Commit knowledge to chain
+  await commitAGIKnowledge('chat', val, answer);
+  
+  // Sync with network
+  syncAGINetwork();
+  
+  toast('AGI ответил и записал в блокчейн');
+}
+
+// Commit knowledge to AGI chain
+async function commitAGIKnowledge(kind, prompt, answer) {
+  const ts = Date.now();
+  const payloadText = JSON.stringify({ did: AGI_STATE.did, kind, prompt, answer, ts });
+  const hash = await hash16D(payloadText);
+  const signature = await hash16D(AGI_STATE.secret + '|' + hash);
+  const commit = { did: AGI_STATE.did, kind, prompt, answer, ts, hash, signature };
+  acceptAGICommit(commit, '[LOCAL]');
+  
+  // Broadcast to P2P
+  if (typeof BroadcastChannel !== 'undefined') {
+    const channel = new BroadcastChannel(AGI_CFG.syncChannel);
+    channel.postMessage({ type: 'AGI_COMMIT', did: AGI_STATE.did, payload: commit });
+  }
+  
+  // Push to HTTP bridge
+  try {
+    await fetch(AGI_CFG.collectiveApi + '/api/collective/commit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(commit)
+    });
+  } catch(e) {
+    console.log('HTTP bridge unavailable');
+  }
+  
+  // Push L1 receipt
+  try {
+    await fetch(AGI_CFG.collectiveApi + '/api/collective/receipt', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        did: commit.did,
+        commit_hash: commit.hash,
+        signature: commit.signature,
+        ts: commit.ts
+      })
+    });
+  } catch(e) {
+    console.log('L1 receipt skipped');
+  }
+}
+
+// Sync with network
+function syncAGINetwork() {
+  if (typeof BroadcastChannel !== 'undefined') {
+    const channel = new BroadcastChannel(AGI_CFG.syncChannel);
+    channel.postMessage({ type: 'AGI_PULL_REQ', did: AGI_STATE.did, ts: Date.now() });
+  }
+}
+
+// Run Autopilot
+function runAutopilot() {
+  const inp = document.getElementById('aiInput');
+  const task = (inp.value || '').trim() || 'Запусти автопилот роста продаж и снижения расходов';
+  logAGI('Автопилот запущен: ' + task);
+  toast('AGI Autopilot активирован: ' + task.slice(0, 30) + '...');
+  // Create autopilot intent in EVM simulation
+  const intentCmd = 'DEPLOY agi_autopilot_' + task.slice(0, 20).replace(/\s+/g, '_');
+  console.log('Autopilot intent:', intentCmd);
+}
+
+// Page navigation
+const pages=[...document.querySelectorAll('.page')];
+const navs=[...document.querySelectorAll('[data-page]')];
+function openPage(id){
+  pages.forEach(p=>p.classList.remove('active'));
+  const page=document.getElementById('page-'+id);
+  if(page) page.classList.add('active');
+  navs.forEach(n=>n.classList.toggle('active', n.dataset.page===id));
+}
+navs.forEach(n=>n.addEventListener('click',()=>openPage(n.dataset.page)));
+
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.style.opacity='1';
+  t.style.transform='translateX(-50%) translateY(0)';
+  clearTimeout(window.__toastTimer);
+  window.__toastTimer=setTimeout(()=>{t.style.opacity='0';t.style.transform='translateX(-50%) translateY(20px)';},2200);
+}
+
+function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
+
+// Initialize on load
+window.addEventListener('DOMContentLoaded', async () => {
+  await initAGI();
+  // Auto-sync every 30 seconds
+  setInterval(syncAGINetwork, 30000);
+});
+
+// L1 Status (demo)
+const L1_STATE = { blocks: 0, hash: '' };
+setInterval(() => {
+  L1_STATE.blocks++;
+  L1_STATE.hash = '0x' + Math.random().toString(16).slice(2, 18);
+}, 5000);
+</script>
+</body>
+</html>

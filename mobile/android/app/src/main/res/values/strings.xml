@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">SINERGY Super App</string>
+    <string name="title_activity_main">SINERGY Super App</string>
+    <string name="package_name">com.sinergy.node</string>
+    <string name="custom_url_scheme">com.sinergy.node</string>
+</resources>

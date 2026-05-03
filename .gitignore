@@ -1,0 +1,21 @@
+# Android SDK - CI скачает сам
+mobile/android-sdk/
+mobile/android/.gradle/
+mobile/android/build/
+mobile/android/app/build/
+mobile/android/app/src/main/res/raw/Qwen3.5-0.8B-Q4_K_M.gguf
+
+# Gradle
+.gradle/
+build/
+
+# IDE
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
