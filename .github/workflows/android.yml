@@ -28,11 +28,15 @@ jobs:
       run: |
         cd mobile/android
         chmod +x gradlew
-        ./gradlew assembleDebug
-        ls -la app/build/outputs/apk/debug/
+        ./gradlew assembleDebug --stacktrace 2>&1 || true
+    
+    - name: List build outputs
+      run: |
+        ls -la mobile/android/app/build/outputs/apk/debug/ 2>&1 || echo "No output dir"
+        find mobile/android -name "*.apk" 2>/dev/null || echo "No APK found"
     
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: sinergyapp
-        path: mobile/android/app/build/outputs/apk/debug/app-debug.apk
+        path: mobile/android/app/build/outputs/apk/debug/*.apk
